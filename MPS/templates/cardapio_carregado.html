@@ -1,0 +1,14 @@
+{% entexds "cardapio.html" %}
+
+{% block content%}
+{% for prato in pratos %}
+    <div name="pedido" >
+        {% prato.nome %}<br>
+        {% prato.valor %}
+        <form action="" method="post">
+            <input name="pratoId" value="{% prato.id %}">
+            <input type="submit" value="Pedir">
+        </form>
+    </div>
+{% endfor %}
+{% endblock %}

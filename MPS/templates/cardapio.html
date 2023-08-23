@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Fazer Pedido</title>
+</head>
+<body>
+    <h1>Cardapio da Semana</h1>
+    <div class="Prato1">
+        <form action="cadapio/" method="POST">
+            {%csrf_token%}
+            <label for="refeicao">Refeição</label>
+            <select name="refeicao">
+                <option value="cafe-manha">Cafe da Manhã</option>
+                <option value="almoco">Almoço</option>
+                <option value="merenda">Merenda</option>
+                <option value="janta">Janta</option>
+            </select>
+            <label for="data">Data:</label>
+            <input type="date" name="data">
+            <input type="submit" name="send"  value="pesquisar">
+        </form>
+    </div>
+    {% block content%} {% endblock %}
+</body>
+</html>

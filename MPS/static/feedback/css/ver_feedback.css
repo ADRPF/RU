@@ -1,0 +1,71 @@
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f2f2f2;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+}
+
+.feedback-container {
+  background-color: #ffffff;
+  padding: 20px;
+  border-radius: 5px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  width: 80%;
+  max-width: 400px;
+  display: none; /* Inicia oculto */
+}
+
+.feedback-container.open {
+  display: block; /* Mostra quando aberto */
+}
+
+.feedback-container h1 {
+  font-size: 24px;
+  margin-bottom: 10px;
+}
+
+.feedback-form label {
+  display: block;
+  margin-bottom: 5px;
+}
+
+.feedback-form input,
+.feedback-form select,
+.feedback-form textarea {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.feedback-form button {
+  background-color: #007bff;
+  color: #ffffff;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+#fecharButton {
+  background-image: url("../img/excluir.png");
+  background-size: cover; /* Ajusta o tamanho da imagem */
+  background-repeat: no-repeat; /* Evita repetir a imagem */
+  width: 32px; /* Largura do botão */
+  height: 32px; /* Altura do botão */
+  border: none; /* Remove a borda do botão */
+  cursor: pointer; /* Indicador de clique */
+}
+#fixedTextarea {
+    width: 380px; /* Largura fixa */
+    height: 150px; /* Altura fixa */
+    resize: none; /* Impede o redimensionamento */
+}
+#charCount {
+      font-size: 14px;
+      color: #999;
+}
