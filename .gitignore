@@ -1,3 +1,4 @@
 MPS/db.sqlite3
-MPS/RU/migrations
+MPS/RU/migrations/*
+!MPS/RU/migrations/__init__.py
 *.pyc
