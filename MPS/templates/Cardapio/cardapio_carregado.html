@@ -1,6 +1,9 @@
-{% entexds "cardapio.html" %}
+{% extends "cardapio.html" %}
 
 {% block content%}
+<div>
+    <h1><b>TESTE</b></h1>
+</div>
 {% for prato in pratos %}
     <div name="pedido" >
         {% prato.nome %}<br>

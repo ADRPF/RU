@@ -7,14 +7,14 @@
 <body>
     <h1>Cardapio da Semana</h1>
     <div class="Prato1">
-        <form action="cadapio/" method="POST">
+        <form action="" method="POST">
             {%csrf_token%}
             <label for="refeicao">Refeição</label>
             <select name="refeicao">
-                <option value="cafe-manha">Cafe da Manhã</option>
-                <option value="almoco">Almoço</option>
-                <option value="merenda">Merenda</option>
-                <option value="janta">Janta</option>
+                <option value="CM">Cafe da Manhã</option>
+                <option value="AL">Almoço</option>
+                <option value="MR">Merenda</option>
+                <option value="JT">Janta</option>
             </select>
             <label for="data">Data:</label>
             <input type="date" name="data">

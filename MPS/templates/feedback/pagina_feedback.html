@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+{% load static %}
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pedidos</title>
+  <link rel="stylesheet" href="{% static '/feedback/css/ver_feedback.css' %}">
+</head>
+<body>
+  <a href="#" id="toggleLink">Escrever Feedback</a>
+  <div class="feedback-container" id="feedbackContainer">
+    <button id="fecharButton"></button>
+    <h1>Feedback Pedido nº</h1>
+    <form class="feedback-form" action="#" method="post">{% csrf_token %}
+      <h3>Olá {{nome}}</h3>
+      <!-- ... campos do formulário ... -->
+      <h4>Escolha uma nota:</h4>
+      <select>
+        <option value="1">1 Estrela</option>
+        <option value="2">2 Estrelas</option>
+        <option value="3">3 Estrelas</option>
+        <option value="4">4 Estrelas</option>
+        <option value="5">5 Estrelas</option>
+      </select>
+      <textarea id="fixedTextarea" maxlength="280" rows="4" cols="50"></textarea>
+      <p id="charCount">Caracteres restantes: 280</p>
+      <button type="submit">Enviar Feedback</button>
+    </form>
+  </div>
+
+  <script src="{% static '/feedback/js/ver_feedback.js' %}"></script>
+</body>
+</html>
+
