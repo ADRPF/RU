@@ -47,7 +47,7 @@ FORMA_PAG = [
     (CREDITO, 'CREDITO')
 ]
 class Pedido(models.Model):
-    horario = models.DateTimeField(auto_now=True)
+    diaCompra = models.DateField(auto_now=True)
     formaPag = models.CharField(max_length=2, choices=FORMA_PAG, default=DINHEIRO, blank=False, null=False)
     corpoAcad = models.ForeignKey(CorpoAcad, on_delete=models.CASCADE)
     prato = models.ManyToManyField('Prato')
@@ -82,7 +82,7 @@ class Material(models.Model):
 class Prato(models.Model):
     nome = models.CharField(max_length=100, default='Sem Nome', blank=False, null=False)
     valor = models.CharField(max_length=4, default='0.00', blank=False, null=False)
-    desc = models.CharField(max_length=1000, default='Sem desc.', blank=False, null=False)
+    desc = models.TextField()
     material = models.ManyToManyField(Material)
 
     def __str__(self):

@@ -8,7 +8,9 @@
     <div name="pedido" >
         Nome do Prato: {{ prato.nome }}<br>
         Valor do Prato: {{ prato.valor }}<br>
+        <textarea readonly rows="5" cols="25">{{ prato.desc }}</textarea>
         <form action="" method="post">
+            {%csrf_token%}
             <input name="pratoId" value="{{ prato.id }}" hidden>
             <input type="submit" value="Pedir">
         </form>
