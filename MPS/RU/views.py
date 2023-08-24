@@ -57,7 +57,11 @@ def consultarCardapio(request):
         return render(request, 'corpoAcad/cardapio/cardapio.html')
 
 def registrarFeedback(request):
-    return render(request, "corpoAcad/feedback/pagina_feedback.html")
+    if request.method == 'POST':
+        #TODO: Salvar o feedback quando o model estiver pronto
+        return
+    else:
+        return render(request, "corpoAcad/feedback/pagina_feedback.html")
 
 def index(request):
     return
