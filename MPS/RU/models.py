@@ -3,16 +3,17 @@ from django.db import models
 # Create your models here.
 
 SEXO_CHOICES = [
-        ('F', 'FEMININO'),
-        ('M', 'MASCULINO'),
-        ('N', 'NENHUMA DAS OPCOES')
+    ('F', 'FEMININO'),
+    ('M', 'MASCULINO'),
+    ('N', 'NENHUMA DAS OPCOES')
 ]
 
-
+STATUS = [
+    ('A', 'ATIVO'),
+    ('D', 'DESATIVADO'),
+    ('P', 'PENDENTE'),
+]
 class Cadastro(models.Model):
-    STATUS = [('A', 'ATIVO'),
-              ('D', 'DESATIVADO'),
-              ('P', 'PENDENTE')]
 
     dataCadastro = models.DateTimeField(auto_now=True)
     status = models.CharField(max_length=1, choices=STATUS, blank=False, null=False)
@@ -37,15 +38,15 @@ class Admin(models.Model):
     def __str__(self):
         return self.nome
 
-
+DINHEIRO = 'DN'
+DEBITO = 'DB'
+CREDITO = 'CR'
+FORMA_PAG = [
+    (DINHEIRO, 'DINHEIRO'),
+    (DEBITO, 'DEBITO'),
+    (CREDITO, 'CREDITO')
+]
 class Pedido(models.Model):
-    DINHEIRO = 'DN'
-    DEBITO = 'DB'
-    CREDITO = 'CR'
-    FORMA_PAG = [(DINHEIRO, 'DINHEIRO'),
-                 (DEBITO, 'DEBITO'),
-                 (CREDITO, 'CREDITO')]
-
     horario = models.DateTimeField(auto_now=True)
     formaPag = models.CharField(max_length=2, choices=FORMA_PAG, default=DINHEIRO, blank=False, null=False)
     corpoAcad = models.ForeignKey(CorpoAcad, on_delete=models.CASCADE)
@@ -54,26 +55,24 @@ class Pedido(models.Model):
     def __str__(self):
         return 'pedido: ' + str(self.pk)
 
+VERDURA = 'V'
+FRUTA = 'F'
+CARNE = 'C'
+FRUTO_DO_MAR = 'M'
+BEBIDA = 'B'
+NENHUM = 'N'
 
+TIPO_MATERIAL = [
+    (VERDURA, 'VERDURA'),
+    (FRUTA, 'FRUTA'),
+    (CARNE, 'CARNE'),
+    (FRUTO_DO_MAR, 'FRUTO_DO_MAR'),
+    (BEBIDA, 'BEBIDA'),
+    (NENHUM, 'NENHUM')
+]
 class Material(models.Model):
-    VERDURA = 'V'
-    FRUTA = 'F'
-    CARNE = 'C'
-    FRUTO_DO_MAR = 'M'
-    BEBIDA = 'B'
-    NENHUM = 'N'
-
-    TIPO_MATERIAL = [
-        (VERDURA, 'VERDURA'),
-        (FRUTA, 'FRUTA'),
-        (CARNE, 'CARNE'),
-        (FRUTO_DO_MAR, 'FRUTO_DO_MAR'),
-        (BEBIDA, 'BEBIDA'),
-        (NENHUM, 'NENHUM')
-    ]
-
-    tipoMaterial = models.CharField(max_length=1, default=NENHUM, blank=False, null=False)
-    material = models.CharField(max_length=50, choices=TIPO_MATERIAL, default=NENHUM, blank=False, null=False)
+    tipoMaterial = models.CharField(max_length=1, choices=TIPO_MATERIAL, default=NENHUM, blank=False, null=False)
+    material = models.CharField(max_length=50, default='Insira um Matrial/Ingrediente', blank=False, null=False)
     quantidade = models.IntegerField()
 
     def __str__(self):
@@ -89,22 +88,20 @@ class Prato(models.Model):
     def __str__(self):
         return self.nome
 
+CAFE_MANHA = 'CM'
+ALMOCO = 'AL'
+MERENDA = 'MR'
+JANTA = 'JT'
 
+REFEICOES = [
+    (CAFE_MANHA, 'CAFE_DA_MANHA'),
+    (ALMOCO, 'ALMOCO'),
+    (MERENDA, 'MERENDA'),
+    (JANTA, 'JANTA')
+]
 class Cardapio(models.Model):
-    CAFE_MANHA = 'CM'
-    ALMOCO = 'AL'
-    MERENDA = 'MR'
-    JANTA = 'JT'
-
-    REFEICOES = [
-        (CAFE_MANHA, 'CAFE_DA_MANHA'),
-        (ALMOCO, 'ALMOCO'),
-        (MERENDA, 'MERENDA'),
-        (JANTA, 'JANTA')
-    ]
-
     tipoRefeicao = models.CharField(max_length=2, choices=REFEICOES, default='NAO SELECIONADO', blank=False, null=False)
-    diaRefeicao = models.DateField(auto_now=True)
+    diaRefeicao = models.DateField()
     prato = models.ManyToManyField(Prato)
 
     def __str__(self):

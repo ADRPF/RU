@@ -1,15 +1,15 @@
-{% extends "cardapio.html" %}
+{% extends 'Cardapio/cardapio.html' %}
 
 {% block content%}
 <div>
-    <h1><b>TESTE</b></h1>
+    <h1><b>Pratos</b></h1>
 </div>
 {% for prato in pratos %}
     <div name="pedido" >
-        {% prato.nome %}<br>
-        {% prato.valor %}
+        Nome do Prato: {{ prato.nome }}<br>
+        Valor do Prato: {{ prato.valor }}<br>
         <form action="" method="post">
-            <input name="pratoId" value="{% prato.id %}">
+            <input name="pratoId" value="{{ prato.id }}" hidden>
             <input type="submit" value="Pedir">
         </form>
     </div>
