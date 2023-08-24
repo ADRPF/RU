@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <div>
+        <h1>Registrar Cardapio</h1>
+        <form action="" method="post">
+            {%csrf_token%}
+            <label for="prato_list">Pratos: </label>
+            <select id="prato_list" name="prato">
+                {% for prato in pratos %}
+                <option value=" {{ prato.id }} "> {{ prato.nome }} </option>
+                {% endfor %}
+            </select><br>
+            <label for="refeicao_list">Tipo de Refeicao: </label>
+            <select id="refeicao_list" name="refeicao">
+                <option value="CM">Cafe da Manha</option>
+                <option value="AL">Almoco</option>
+                <option value="MR">Merenda</option>
+                <option value="JT">Janta</option>
+            </select><br>
+            <label for="dia">Data: </label>
+            <input id="dia" name="dia" type="date"><br>
+            <input type="submit" value="Registrar">
+        </form>
+    </div>
+</body>
+</html>

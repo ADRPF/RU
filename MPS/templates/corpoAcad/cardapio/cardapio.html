@@ -10,14 +10,14 @@
         <form action="" method="post">
             {%csrf_token%}
             <label for="refeicao">Refeição</label>
-            <select name="refeicao">
+            <select id="refeicao" name="refeicao">
                 <option value="CM">Cafe da Manhã</option>
                 <option value="AL">Almoço</option>
                 <option value="MR">Merenda</option>
                 <option value="JT">Janta</option>
             </select>
             <label for="data">Data:</label>
-            <input type="date" name="data">
+            <input id="data" type="date" name="data">
             <input type="submit" name="send"  value="pesquisar">
         </form>
     </div>

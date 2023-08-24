@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <div>
+        <h1>Registrar Prato</h1>
+        <form action="" method="post">
+            {%csrf_token%}
+            <label for="prato_nome">Nome: </label>
+            <input id="prato_nome" name="prato_nome" type="text"><br>
+            <label for="prato_valor">Valor: </label>
+            <input id="prato_valor" name="prato_valor" type="text"><br>
+            <label for="prato_desc">Descricao: <br></label>
+            <textarea id="prato_desc" name="prato_desc" rows="4" cols="50"></textarea><br>
+            <input type="submit" value="registrar">
+        </form>
+    </div>
+</body>
+</html>
