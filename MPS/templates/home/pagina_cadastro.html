@@ -13,14 +13,18 @@
     <h1>Cadastro</h1>
     <img src="{% static 'pedidos/img/happy.png' %}"><br>
     <form action="" method="POST">{% csrf_token %}
-        <input type="text" name="nome" placeholder="Digite seu nome" required>
+        <input type="text" name="nome" placeholder="Nome de usuário" required>
         <br>
         <input type ="number" name="matricula" placeholder="Digite sua matrícula" required>
     <br>
-        <input type ="password" name="senha" placeholder="Digite sua senha" required>
-    <br>
         Data de Nascimento:<input type="date" name="data">
     <br>
+        Sexo:<select id="sexo" name="sexo">
+        <option value="M">Masculino</option>
+        <option value="F">Feminino</option>
+        <option value="N">Prefiro não dizer</option>
+      </select>
+        <br>
     <br>
     <input type="submit" value="Enviar">
     </form>
