@@ -28,6 +28,8 @@ def logar(request):
 def fazer_logout(request):
     logout(request)
     return redirect('logar')
+
+
 def cadastrar_aluno(request):
     if request.method == "GET":
         print('GET')
