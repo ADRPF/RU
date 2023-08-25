@@ -13,6 +13,8 @@ STATUS = [
     ('D', 'DESATIVADO'),
     ('P', 'PENDENTE'),
 ]
+
+
 class Cadastro(models.Model):
 
     dataCadastro = models.DateTimeField(auto_now=True)
@@ -38,6 +40,7 @@ class Admin(models.Model):
     def __str__(self):
         return self.nome
 
+
 DINHEIRO = 'DN'
 DEBITO = 'DB'
 CREDITO = 'CR'
@@ -46,6 +49,8 @@ FORMA_PAG = [
     (DEBITO, 'DEBITO'),
     (CREDITO, 'CREDITO')
 ]
+
+
 class Pedido(models.Model):
     diaCompra = models.DateField(auto_now=True)
     formaPag = models.CharField(max_length=2, choices=FORMA_PAG, default=DINHEIRO, blank=False, null=False)
@@ -55,6 +60,17 @@ class Pedido(models.Model):
 
     def __str__(self):
         return 'pedido: ' + str(self.pk)
+
+
+class Feedback(models.Model):
+    pedido = models.OneToOneField(Pedido, on_delete=models.CASCADE, blank=True, null=True)
+    respondido = models.BooleanField()
+    mensagem = models.TextField()
+    resposta = models.TextField()
+
+    def __str__(self):
+        return 'Feedback: ' + str(self.pedido)
+
 
 VERDURA = 'V'
 FRUTA = 'F'
@@ -71,6 +87,8 @@ TIPO_MATERIAL = [
     (BEBIDA, 'BEBIDA'),
     (NENHUM, 'NENHUM')
 ]
+
+
 class Material(models.Model):
     tipoMaterial = models.CharField(max_length=1, choices=TIPO_MATERIAL, default=NENHUM, blank=False, null=False)
     material = models.CharField(max_length=50, default='Insira um Matrial/Ingrediente', blank=False, null=False)
@@ -89,6 +107,7 @@ class Prato(models.Model):
     def __str__(self):
         return self.nome
 
+
 CAFE_MANHA = 'CM'
 ALMOCO = 'AL'
 MERENDA = 'MR'
@@ -100,6 +119,8 @@ REFEICOES = [
     (MERENDA, 'MERENDA'),
     (JANTA, 'JANTA')
 ]
+
+
 class Cardapio(models.Model):
     tipoRefeicao = models.CharField(max_length=2, choices=REFEICOES, default='NAO SELECIONADO', blank=False, null=False)
     diaRefeicao = models.DateField()
