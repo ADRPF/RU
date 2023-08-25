@@ -10,17 +10,15 @@ from datetime import datetime
 #Funções de Usuário
 def logar(request):
     if request.method == 'POST':
-        nome = request.POST.get('nome')
-        matricula = request.POST.get('matricula')
-        user = authenticate(request, username=nome, password=matricula)
-        print(user)
-        #usuario = CorpoAcad.objects.filter(nome=nome)
-        usuarios = User.objects.all()
-        for usuario in usuarios:
-            print(usuario.password)
-        if User.objects.filter(username=nome, is_active=True).exists() and user is not None:
+        nome = request.POST.get('username')
+        senha = request.POST.get('senha')
+        user = authenticate(request, username=nome, password=senha)
+        if user is not None:
             login(request, user)
-            return redirect('inicial')
+            ca = CorpoAcad.objects.get(usuario=user)
+            context = {'nome': user.username,
+                       'matricula': ca.matricula}
+            return render(request, 'home/index.html', context)
         else:
             print("Não existe esse usuário ou não está ativo")
     return render(request, 'home/pagina_login.html')
@@ -37,11 +35,12 @@ def cadastrar_aluno(request):
     if request.method == "POST":
         nome = request.POST.get('nome')
         matricula = request.POST.get('matricula')
+        senha = request.POST.get('senha')
         data = request.POST.get('data')
         sexo = request.POST.get('sexo')
         status = False
         if not User.objects.filter(username=nome).exists():
-            user = User.objects.create_user(username=nome, password=matricula, is_active=status)
+            user = User.objects.create_user(username=nome, password=senha, is_active=status)
             user.save()
             usuario = CorpoAcad(usuario=user, matricula=matricula, dtNascimento=data, sexo=sexo)
             usuario.save()

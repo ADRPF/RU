@@ -13,9 +13,9 @@
     <h1>Login</h1>
     <img src="{% static 'pedidos/img/happy.png' %}"><br>
     <form action="" method="POST">{% csrf_token %}
-        <input type="text" name="nome" placeholder="Digite seu usuário" required>
+        <input type="text" name="username" placeholder="Digite seu usuário" required>
         <br>
-        <input type ="number" name="matricula" placeholder="Digite sua matrícula" required>
+        <input type ="password" name="senha" placeholder="Digite sua matrícula" required>
     <br>
     <br>
     <input type="submit" value="Enviar">

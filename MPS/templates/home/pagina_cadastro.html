@@ -15,11 +15,13 @@
     <form action="" method="POST">{% csrf_token %}
         <input type="text" name="nome" placeholder="Nome de usuário" required>
         <br>
+        <input type="password" name="senha" placeholder="Senha" required>
+        <br>
         <input type ="number" name="matricula" placeholder="Digite sua matrícula" required>
     <br>
-        Data de Nascimento:<input type="date" name="data">
+        Data de Nascimento:<input type="date" name="data" required>
     <br>
-        Sexo:<select id="sexo" name="sexo">
+        Sexo:<select id="sexo" name="sexo" required>
         <option value="M">Masculino</option>
         <option value="F">Feminino</option>
         <option value="N">Prefiro não dizer</option>
