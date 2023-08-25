@@ -1,4 +1,5 @@
 from django.db import models
+from django.contrib.auth.models import User
 
 # Create your models here.
 
@@ -6,12 +7,6 @@ SEXO_CHOICES = [
     ('F', 'FEMININO'),
     ('M', 'MASCULINO'),
     ('N', 'NENHUMA DAS OPCOES')
-]
-
-STATUS = [
-    ('A', 'ATIVO'),
-    ('D', 'DESATIVADO'),
-    ('P', 'PENDENTE'),
 ]
 
 DINHEIRO = 'DN'
@@ -50,30 +45,12 @@ REFEICOES = [
     (JANTA, 'JANTA')
 ]
 
-class Cadastro(models.Model):
-
-    dataCadastro = models.DateTimeField(auto_now=True)
-    status = models.CharField(max_length=1, choices=STATUS, blank=False, null=False)
-
 
 class CorpoAcad(models.Model):
+    usuario = models.OneToOneField(User, on_delete=models.CASCADE)
     matricula = models.CharField(max_length=10, blank=False, null=False, unique=True)
-    nome = models.CharField(max_length=100, default='Sem Nome', blank=False, null=False)
     dtNascimento = models.DateField(auto_now=False)
     sexo = models.CharField(max_length=1, choices=SEXO_CHOICES, default='N', blank=False, null=False)
-    cadastro = models.ForeignKey(Cadastro, on_delete=models.CASCADE)
-
-    def __str__(self):
-        return self.nome
-
-
-class Admin(models.Model):
-    nome = models.CharField(max_length=100, default='Sem Nome', blank=False, null=False)
-    dtNascimento = models.DateField(auto_now=False)
-    sexo = models.CharField(max_length=1, choices=SEXO_CHOICES, blank=False, null=False)
-
-    def __str__(self):
-        return self.nome
 
 
 class Feedback(models.Model):

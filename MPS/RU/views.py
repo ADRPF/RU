@@ -40,16 +40,10 @@ def cadastrar_aluno(request):
         data = request.POST.get('data')
         sexo = request.POST.get('sexo')
         status = False
-        cadastro = Cadastro()
-        cadastro.status = "P"
-        cadastro.dataCadastro = datetime.now()
-        usuario = CorpoAcad(nome=nome, matricula=matricula, dtNascimento=data, sexo=sexo, cadastro=cadastro)
-        usuarios = CorpoAcad.objects.all()
-        usuarios2 = CorpoAcad.objects.filter(nome=nome)
         if not User.objects.filter(username=nome).exists():
             user = User.objects.create_user(username=nome, password=matricula, is_active=status)
             user.save()
-            cadastro.save()
+            usuario = CorpoAcad(usuario=user, matricula=matricula, dtNascimento=data, sexo=sexo)
             usuario.save()
             print("Usuário cadastrado")
             return redirect('logar')
