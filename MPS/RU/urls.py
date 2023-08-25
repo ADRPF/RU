@@ -2,12 +2,14 @@ from django.urls import path
 from .views import *
 
 urlpatterns = [
-    path('cardapio/', consultarCardapio),
-    path('registrar_cardapio/', registrarCardapio),
-    path('registrar_prato/', registrarPrato),
-    path('registrar_feedback/', registrarFeedback),
-    path('inicio/', index, name='inicial'),
+    path('inicio/', index, name='inicio'),
     path('login/', logar, name='logar'),
-    path('cadastro/', cadastrar_aluno),
-    path('feedback/', ver_feedback)
+    path('logout/', fazer_logout, name='logout'),
+    path('cadastro/', solicitarCadCA, name='cadastro'),
+    path('cardapio/', consultarCardapio, name='cardapio'),
+    path('cardapio/registrar_pedido/', registrarPedido, name='registrar pedido'),
+    path('pedido/', consultarCardapio),
+    path('pedido/registrar_feedback/', registrarFeedback),
+    path('feedback/', ver_feedback),
+    path('feedback/ver_resposta', ver_resp_feedback)
 ]

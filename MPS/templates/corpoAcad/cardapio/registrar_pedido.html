@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <h1>Realizar Pedido</h1>
+    <form action="" method="post">
+        {%csrf_token%}
+        <input name="pratoId" type="text" value="{{pratoId}}" hidden>
+        <select name="formaPag">
+            <option value="DN">Dinheiro</option>
+            <option value="DB">Debito</option>
+            <option value="CR">Credito</option>
+        </select>
+        <br><input type="submit" value="pedir">
+    </form>
+</body>
+</html>

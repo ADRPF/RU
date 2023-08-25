@@ -18,7 +18,7 @@ def logar(request):
             ca = CorpoAcad.objects.get(usuario=user)
             context = {'nome': user.username,
                        'matricula': ca.matricula}
-            return render(request, 'home/index.html', context)
+            return redirect('inicio')
         else:
             print("Não existe esse usuário ou não está ativo")
     return render(request, 'home/pagina_login.html')
@@ -28,7 +28,17 @@ def fazer_logout(request):
     return redirect('logar')
 
 
-def cadastrar_aluno(request):
+def index(request):
+    if request.user.is_authenticated:
+        usuario = CorpoAcad.objects.get(usuario=request.user.pk)
+        context = {'nome': request.user.username,
+                   'matricula': usuario.matricula}
+        return render(request,'home/index.html', context)
+    else:
+        return redirect('logar')
+
+
+def solicitarCadCA(request):
     if request.method == "GET":
         print('GET')
         return render(request, 'home/pagina_cadastro.html')
@@ -51,19 +61,6 @@ def cadastrar_aluno(request):
     return render(request, 'home/pagina_cadastro.html')
 
 
-#Funções do Admin
-def registrarPrato(request):
-    if request.method == 'POST':
-        prato_nome = request.POST.get('prato_nome')
-        prato_valor = request.POST.get('prato_valor')
-        prato_desc = request.POST.get('prato_desc')
-        prato = Prato(nome=prato_nome, valor=prato_valor, desc=prato_desc)
-        prato.save()
-        return
-    else:
-        return render(request, 'admin/cardapio/registrar_prato.html')
-
-
 # Funcões do Corpo Academico
 def registrarCardapio(request):
     if request.method == 'POST':
@@ -80,28 +77,75 @@ def registrarCardapio(request):
         return render(request, 'admin/cardapio/registrar_cardapio.html', context)
 
 def consultarCardapio(request):
-    if request.method == 'POST':
-        # Recarrega a página com as instâncias de prato relacionados com a refeicao e dia selecionados
-        refeicao, dia = request.POST.get('refeicao'), request.POST.get('data') # faz o get nos campos refeicao e data
-        cardapio = Cardapio.objects.filter(tipoRefeicao=refeicao, diaRefeicao=dia) # consulta os itens do cardapio
-        pratos_queryset_list = [c.prato.all() for c in cardapio] # cria uma lista de todos os pratos do cardapio
-        pratos = []
-        for p in pratos_queryset_list:
-            pratos.append({'id': p[0].pk, 'nome': p[0].nome, 'valor': p[0].valor, 'desc': p[0].desc}) # concatena os atributos de prato para o context
-        context = {'pratos': pratos}
-        return render(request, 'corpoAcad/cardapio/cardapio_carregado.html', context=context)
+    if request.user.is_authenticated:
+        if request.method == 'POST':
+            # Recarrega a página com as instâncias de prato relacionados com a refeicao e dia selecionados
+            refeicao, dia = request.POST.get('refeicao'), request.POST.get('data') # faz o get nos campos refeicao e data
+            cardapio = Cardapio.objects.filter(tipoRefeicao=refeicao, diaRefeicao=dia) # consulta os itens do cardapio
+            pratos_queryset_list = [c.prato.all() for c in cardapio] # cria uma lista de todos os pratos do cardapio
+            pratos = []
+            for p in pratos_queryset_list:
+                pratos.append({'id': p[0].pk, 'nome': p[0].nome, 'valor': p[0].valor, 'desc': p[0].desc}) # concatena os atributos de prato para o context
+            context = {'pratos': pratos}
+            return render(request, 'corpoAcad/cardapio/cardapio_carregado.html', context=context)
+        else:
+            # Carrega a página na primeira requisação ao servidor.
+            return render(request, 'corpoAcad/cardapio/cardapio.html')
     else:
-        # Carrega a página na primeira requisação ao servidor.
-        return render(request, 'corpoAcad/cardapio/cardapio.html')
+        return redirect('logar')
+
+
+def registrarPedido(request):
+    if request.user.is_authenticated:
+        if request.method == 'POST':
+            pratoId = request.POST.get('pratoId')
+            print(pratoId)
+            formaPag = request.POST.get('formaPag')
+            pedido = Pedido(formaPag=formaPag, corpoAcad=request.user)
+            pedido.save()
+            pedido.prato.set(pratoId)
+            return redirect('inicio')
+        else:
+            return render(request, 'corpoAcad/cardapio/registrar_pedido.html')
+    else:
+        return redirect('logar')
+
+
+def visualizar_pedidos(request):
+    if request.user.is_authenticated:
+        if request.method == 'POST':
+            dia = request.POST.get('dia')
+            pedidos_qs = Pedido.objects.filter(corpoAcad=request.user.pk, diaCompra=dia)
+            pedidos = pedidos_qs.objects.all()
+            context = {'pedidos': pedidos}
+            return render(request, '', context)
+        else:
+            return render(request, '')
+    else:
+        return redirect('logar')
+
 
 def registrarFeedback(request):
-    if request.method == 'POST':
-        #TODO: Salvar o feedback quando o model estiver pronto
+    if request.user.is_authenticated:
+        if request.method == 'POST':
+            #TODO: Salvar o feedback quando o model estiver pronto
+            return
+        else:
+            return render(request, "corpoAcad/feedback/pagina_feedback.html")
+    else:
+        return redirect('logar')
+
+
+def ver_feedback(request):
+    if request.user.is_authenticated:
+        return render(request, 'corpoAcad/feedback/pagina_feedback.html')
+    else:
+        return redirect('logar')
+
+
+
+def ver_resp_feedback(request):
+    if request.user.is_authenticated:
         return
     else:
-        return render(request, "corpoAcad/feedback/pagina_feedback.html")
-
-def index(request):
-    return render(request, 'home/index.html')
-def ver_feedback(request):
-    return render(request, 'corpoAcad/feedback/pagina_feedback.html')
+        return redirect('logar')

@@ -64,14 +64,12 @@ class Feedback(models.Model):
 class Pedido(models.Model):
     diaCompra = models.DateField(auto_now=True)
     formaPag = models.CharField(max_length=2, choices=FORMA_PAG, default=DINHEIRO, blank=False, null=False)
-    corpoAcad = models.ForeignKey(CorpoAcad, on_delete=models.CASCADE)
+    corpoAcad = models.ForeignKey(User, on_delete=models.CASCADE)
     prato = models.ManyToManyField('Prato')
     feedback = models.OneToOneField(Feedback, on_delete=models.CASCADE, blank=True, null=True)
 
     def __str__(self):
         return 'pedido: ' + str(self.pk)
-
-
 
 
 class Prato(models.Model):
