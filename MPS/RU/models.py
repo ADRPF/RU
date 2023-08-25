@@ -13,6 +13,43 @@ STATUS = [
     ('D', 'DESATIVADO'),
     ('P', 'PENDENTE'),
 ]
+
+DINHEIRO = 'DN'
+DEBITO = 'DB'
+CREDITO = 'CR'
+FORMA_PAG = [
+    (DINHEIRO, 'DINHEIRO'),
+    (DEBITO, 'DEBITO'),
+    (CREDITO, 'CREDITO')
+]
+
+VERDURA = 'V'
+FRUTA = 'F'
+CARNE = 'C'
+FRUTO_DO_MAR = 'M'
+BEBIDA = 'B'
+NENHUM = 'N'
+TIPO_MATERIAL = [
+    (VERDURA, 'VERDURA'),
+    (FRUTA, 'FRUTA'),
+    (CARNE, 'CARNE'),
+    (FRUTO_DO_MAR, 'FRUTO_DO_MAR'),
+    (BEBIDA, 'BEBIDA'),
+    (NENHUM, 'NENHUM')
+]
+
+CAFE_MANHA = 'CM'
+ALMOCO = 'AL'
+MERENDA = 'MR'
+JANTA = 'JT'
+
+REFEICOES = [
+    (CAFE_MANHA, 'CAFE_DA_MANHA'),
+    (ALMOCO, 'ALMOCO'),
+    (MERENDA, 'MERENDA'),
+    (JANTA, 'JANTA')
+]
+
 class Cadastro(models.Model):
 
     dataCadastro = models.DateTimeField(auto_now=True)
@@ -38,14 +75,6 @@ class Admin(models.Model):
     def __str__(self):
         return self.nome
 
-DINHEIRO = 'DN'
-DEBITO = 'DB'
-CREDITO = 'CR'
-FORMA_PAG = [
-    (DINHEIRO, 'DINHEIRO'),
-    (DEBITO, 'DEBITO'),
-    (CREDITO, 'CREDITO')
-]
 
 class Feedback(models.Model):
     respondido = models.BooleanField()
@@ -65,21 +94,7 @@ class Pedido(models.Model):
     def __str__(self):
         return 'pedido: ' + str(self.pk)
 
-VERDURA = 'V'
-FRUTA = 'F'
-CARNE = 'C'
-FRUTO_DO_MAR = 'M'
-BEBIDA = 'B'
-NENHUM = 'N'
 
-TIPO_MATERIAL = [
-    (VERDURA, 'VERDURA'),
-    (FRUTA, 'FRUTA'),
-    (CARNE, 'CARNE'),
-    (FRUTO_DO_MAR, 'FRUTO_DO_MAR'),
-    (BEBIDA, 'BEBIDA'),
-    (NENHUM, 'NENHUM')
-]
 
 
 class Prato(models.Model):
@@ -90,17 +105,6 @@ class Prato(models.Model):
     def __str__(self):
         return self.nome
 
-CAFE_MANHA = 'CM'
-ALMOCO = 'AL'
-MERENDA = 'MR'
-JANTA = 'JT'
-
-REFEICOES = [
-    (CAFE_MANHA, 'CAFE_DA_MANHA'),
-    (ALMOCO, 'ALMOCO'),
-    (MERENDA, 'MERENDA'),
-    (JANTA, 'JANTA')
-]
 class Cardapio(models.Model):
     tipoRefeicao = models.CharField(max_length=2, choices=REFEICOES, default='NAO SELECIONADO', blank=False, null=False)
     diaRefeicao = models.DateField()
