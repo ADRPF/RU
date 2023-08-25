@@ -46,12 +46,21 @@ FORMA_PAG = [
     (DEBITO, 'DEBITO'),
     (CREDITO, 'CREDITO')
 ]
+
+class Feedback(models.Model):
+    respondido = models.BooleanField()
+    mensagem = models.TextField()
+    resposta = models.TextField()
+
+    def __str__(self):
+        return 'feedback: ' + str(self.pk)
+
 class Pedido(models.Model):
     diaCompra = models.DateField(auto_now=True)
     formaPag = models.CharField(max_length=2, choices=FORMA_PAG, default=DINHEIRO, blank=False, null=False)
     corpoAcad = models.ForeignKey(CorpoAcad, on_delete=models.CASCADE)
     prato = models.ManyToManyField('Prato')
-    #feedback = models.OneToOneRel(Feedback, on_delete=models.CASCADE)
+    feedback = models.OneToOneField(Feedback, on_delete=models.CASCADE, blank=True, null=True)
 
     def __str__(self):
         return 'pedido: ' + str(self.pk)
@@ -71,20 +80,12 @@ TIPO_MATERIAL = [
     (BEBIDA, 'BEBIDA'),
     (NENHUM, 'NENHUM')
 ]
-class Material(models.Model):
-    tipoMaterial = models.CharField(max_length=1, choices=TIPO_MATERIAL, default=NENHUM, blank=False, null=False)
-    material = models.CharField(max_length=50, default='Insira um Matrial/Ingrediente', blank=False, null=False)
-    quantidade = models.IntegerField()
-
-    def __str__(self):
-        return self.material
 
 
 class Prato(models.Model):
     nome = models.CharField(max_length=100, default='Sem Nome', blank=False, null=False)
     valor = models.CharField(max_length=4, default='0.00', blank=False, null=False)
     desc = models.TextField()
-    material = models.ManyToManyField(Material)
 
     def __str__(self):
         return self.nome
