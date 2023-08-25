@@ -1,0 +1,16 @@
+{% extends 'corpoAcad/pedido/pedido.html'%}
+
+{% block content %}
+{% for pedido in pedidos %}
+    <div name="pedido" >
+        ID do Pedido: {{ pedido.id }}<br>
+        Forma Pag: {{ pedido.formaPag }}<br>
+        <form action="registrar_pedido/" method="get">
+            {%csrf_token%}
+            <input name="pedidoId" value="{{ pedido.id }}" hidden>
+            {% if pedido.feedback == None %}<input type="submit" value="Mandar Feedback"> {% endif %}
+            {% if pedido.feedback.respondido  %}<input type="submit" value="Visualizar Feedback"> {% endif %}
+        </form>
+    </div><br>
+{% endfor %}
+{% endblock %}

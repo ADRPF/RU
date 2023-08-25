@@ -8,7 +8,7 @@ urlpatterns = [
     path('cadastro/', solicitarCadCA, name='cadastro'),
     path('cardapio/', consultarCardapio, name='cardapio'),
     path('cardapio/registrar_pedido/', registrarPedido, name='registrar pedido'),
-    path('pedido/', consultarCardapio),
+    path('pedido/', visualizar_pedidos),
     path('pedido/registrar_feedback/', registrarFeedback),
     path('feedback/', ver_feedback),
     path('feedback/ver_resposta', ver_resp_feedback)

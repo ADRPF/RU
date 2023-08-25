@@ -115,12 +115,13 @@ def visualizar_pedidos(request):
     if request.user.is_authenticated:
         if request.method == 'POST':
             dia = request.POST.get('dia')
+            print(dia)
             pedidos_qs = Pedido.objects.filter(corpoAcad=request.user.pk, diaCompra=dia)
-            pedidos = pedidos_qs.objects.all()
+            pedidos = pedidos_qs.all()
             context = {'pedidos': pedidos}
-            return render(request, '', context)
+            return render(request, 'corpoAcad/pedido/visualizar_pedido.html', context)
         else:
-            return render(request, '')
+            return render(request, 'corpoAcad/pedido/pedido.html')
     else:
         return redirect('logar')
 

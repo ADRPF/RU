@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <h1>Pedidos</h1>
+    <div>
+        <a href="../inicio/">voltar</a><br><br>
+        <form action="" method="post">
+            {%csrf_token%}
+            <label for="data">Dia:</label>
+            <input id="data" type="date" name="dia">
+            <input type="submit" name="send"  value="pesquisar">
+        </form>
+    </div>
+    {% block content%} {% endblock %}
+</body>
+</html>
