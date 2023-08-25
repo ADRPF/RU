@@ -85,7 +85,7 @@ def consultarCardapio(request):
         for p in pratos_queryset_list:
             pratos.append({'id': p[0].pk, 'nome': p[0].nome, 'valor': p[0].valor, 'desc': p[0].desc}) # concatena os atributos de prato para o context
         context = {'pratos': pratos}
-        return render(request, 'corpoAcadcardapio/cardapio_carregado.html', context=context)
+        return render(request, 'corpoAcad/cardapio/cardapio_carregado.html', context=context)
     else:
         # Carrega a página na primeira requisação ao servidor.
         return render(request, 'corpoAcad/cardapio/cardapio.html')
