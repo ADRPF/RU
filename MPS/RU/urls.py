@@ -8,5 +8,6 @@ urlpatterns = [
     path('registrar_feedback/', registrarFeedback),
     path('inicio/', index),
     path('login/', logar),
-    path('cadastro/', cadastrar),
+    path('cadastro/', cadastrar_aluno),
+    path('feedback/', ver_feedback)
 ]

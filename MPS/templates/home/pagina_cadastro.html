@@ -10,14 +10,16 @@
     <title>Restaurante Universitário - Cadastro</title>
 </head>
 <body>
-    <h1>Cadastro. Olá {{nome}}</h1>
+    <h1>Cadastro</h1>
     <img src="{% static 'pedidos/img/happy.png' %}"><br>
-    <form action="{% url 'cadastrar_aluno' %}" method="POST">{% csrf_token %}
+    <form action="" method="POST">{% csrf_token %}
         <input type="text" name="nome" placeholder="Digite seu nome" required>
         <br>
         <input type ="number" name="matricula" placeholder="Digite sua matrícula" required>
     <br>
         <input type ="password" name="senha" placeholder="Digite sua senha" required>
+    <br>
+        Data de Nascimento:<input type="date" name="data">
     <br>
     <br>
     <input type="submit" value="Enviar">

@@ -1,4 +1,6 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
+from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.models import User
 from django.http import HttpResponse
 from .models import *
 from datetime import datetime
@@ -7,10 +9,42 @@ from datetime import datetime
 
 #Funções de Usuário
 def logar(request):
-    return
+    if request.method == 'POST':
+        nome = request.POST.get('nome')
+        senha = request.POST.get('senha')
+        user = authenticate(request, username=nome, password=senha)
+        usuario = CorpoAcad.objects.filter(nome=nome)
+        if user is not None:
+            login(request, user)
+            return render(request, 'home/index.html')
+        else:
+            print("Não existe esse usuário")
+    return render(request, 'home/pagina_login.html')
 
-def cadastrar(request):
-    return
+def fazer_logout(request):
+    logout(request)
+    return redirect('logar')
+def cadastrar_aluno(request):
+    if request.method == "GET":
+        print('GET')
+        return render(request, 'home/pagina_cadastro.html')
+    if request.method == "POST":
+        nome = request.POST.get('nome')
+        matricula = request.POST.get('matricula')
+        data = request.POST.get('data')
+        #senha = request.POST.get('senha')
+        usuario = CorpoAcad(nome=nome, matricula=matricula, dtNascimento=data)
+        usuarios = CorpoAcad.objects.all()
+        usuarios2 = CorpoAcad.objects.filter(nome=nome)
+        print('Chegou aqui')
+        if not User.objects.filter(username=nome).exists():
+            user = User.objects.create_user(username=nome)
+            user.save()
+            print("Usuário cadastrado")
+            return render(request, 'home/pagina_login.html')
+        else:
+            print("Usuário já cadastrado")
+    return render(request, 'home/index.html')
 
 
 #Funções do Admin
@@ -65,3 +99,5 @@ def registrarFeedback(request):
 
 def index(request):
     return
+def ver_feedback(request):
+    return render(request, 'feedback/pagina_feedback.html')
