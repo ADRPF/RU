@@ -11,14 +11,18 @@ from datetime import datetime
 def logar(request):
     if request.method == 'POST':
         nome = request.POST.get('nome')
-        senha = request.POST.get('senha')
-        user = authenticate(request, username=nome, password=senha)
-        usuario = CorpoAcad.objects.filter(nome=nome)
-        if user is not None:
+        matricula = request.POST.get('matricula')
+        user = authenticate(request, username=nome, password=matricula)
+        print(user)
+        #usuario = CorpoAcad.objects.filter(nome=nome)
+        usuarios = User.objects.all()
+        for usuario in usuarios:
+            print(usuario.password)
+        if User.objects.filter(username=nome, is_active=True).exists() and user is not None:
             login(request, user)
-            return render(request, 'home/index.html')
+            return redirect('inicial')
         else:
-            print("Não existe esse usuário")
+            print("Não existe esse usuário ou não está ativo")
     return render(request, 'home/pagina_login.html')
 
 def fazer_logout(request):
@@ -32,19 +36,24 @@ def cadastrar_aluno(request):
         nome = request.POST.get('nome')
         matricula = request.POST.get('matricula')
         data = request.POST.get('data')
-        #senha = request.POST.get('senha')
-        usuario = CorpoAcad(nome=nome, matricula=matricula, dtNascimento=data)
+        sexo = request.POST.get('sexo')
+        status = False
+        cadastro = Cadastro()
+        cadastro.status = "P"
+        cadastro.dataCadastro = datetime.now()
+        usuario = CorpoAcad(nome=nome, matricula=matricula, dtNascimento=data, sexo=sexo, cadastro=cadastro)
         usuarios = CorpoAcad.objects.all()
         usuarios2 = CorpoAcad.objects.filter(nome=nome)
-        print('Chegou aqui')
         if not User.objects.filter(username=nome).exists():
-            user = User.objects.create_user(username=nome)
+            user = User.objects.create_user(username=nome, password=matricula, is_active=status)
             user.save()
+            cadastro.save()
+            usuario.save()
             print("Usuário cadastrado")
-            return render(request, 'home/pagina_login.html')
+            return redirect('logar')
         else:
             print("Usuário já cadastrado")
-    return render(request, 'home/index.html')
+    return render(request, 'home/pagina_cadastro.html')
 
 
 #Funções do Admin
@@ -98,6 +107,6 @@ def registrarFeedback(request):
         return render(request, "corpoAcad/feedback/pagina_feedback.html")
 
 def index(request):
-    return
+    return render(request, 'home/index.html')
 def ver_feedback(request):
-    return render(request, 'feedback/pagina_feedback.html')
+    return render(request, 'corpoAcad/feedback/pagina_feedback.html')
