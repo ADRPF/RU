@@ -8,19 +8,16 @@
   <link rel="stylesheet" href="{% static '/feedback/css/ver_feedback.css' %}">
 </head>
 <body>
-  <a href="#" id="toggleLink">Escrever Feedback</a>
+  <a href="#" id="toggleLink">Visualisar Resposta</a>
   <div class="feedback-container" id="feedbackContainer">
     <button id="fecharButton"></button>
     <h1>Feedback Pedido nº {{pedidoId}}</h1>
-    <form class="feedback-form" action="" method="post">{% csrf_token %}
-      <!-- ... campos do formulário ... -->
-      <input type="text" name="pedidoId" value="{{pedidoId}}" hidden>
-      <textarea id="fixedTextarea" name="fixedTextarea" maxlength="280" rows="4" cols="50"></textarea>
-      <p id="charCount">Caracteres restantes: 280</p>
-      <button type="submit">Enviar Feedback</button>
-    </form>
+    <!-- ... campos do feedback ... -->
+    <textarea id="fixedTextarea" name="fixedTextarea" maxlength="280" rows="4" cols="50" readonly>{{mensagem}}</textarea>
+    <!-- ... campos da resposta ... -->
+    <textarea id="fixedTextarea2" name="fixedTextarea" maxlength="280" rows="4" cols="50" readonly>{{resposta}}</textarea>
+    <a href="../../pedido/">voltar</a>
   </div>
   <script src="{% static '/feedback/js/ver_feedback.js' %}"></script>
 </body>
 </html>
-

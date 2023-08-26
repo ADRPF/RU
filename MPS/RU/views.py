@@ -40,7 +40,6 @@ def index(request):
 
 def solicitarCadCA(request):
     if request.method == "GET":
-        print('GET')
         return render(request, 'home/pagina_cadastro.html')
     if request.method == "POST":
         nome = request.POST.get('nome')
@@ -54,10 +53,7 @@ def solicitarCadCA(request):
             user.save()
             usuario = CorpoAcad(usuario=user, matricula=matricula, dtNascimento=data, sexo=sexo)
             usuario.save()
-            print("Usuário cadastrado")
             return redirect('logar')
-        else:
-            print("Usuário já cadastrado")
     return render(request, 'home/pagina_cadastro.html')
 
 
@@ -130,27 +126,31 @@ def registrarFeedback(request):
     if request.user.is_authenticated:
         if request.method == 'POST':
             mensagem = request.POST.get('fixedTextarea')
+            print(mensagem)
+            pedidoId = request.POST.get('pedidoId')
+            pedido = Pedido.objects.get(pk=pedidoId)
             feedback = Feedback(mensagem=mensagem, respondido=False, resposta='')
-            feedback.respondido = False
             feedback.save()
+            pedido.feedback = feedback
+            pedido.save()
             #TODO: Salvar o feedback quando o model estiver pronto
-            return
+            return redirect('pedido')
         else:
-            return render(request, "corpoAcad/feedback/pagina_feedback.html")
+            context = {'pedidoId': request.GET.get('pedidoId')}
+            return render(request, "corpoAcad/feedback/pagina_feedback.html", context)
     else:
         return redirect('logar')
 
 
 def ver_feedback(request):
     if request.user.is_authenticated:
-        return render(request, 'corpoAcad/feedback/pagina_feedback.html')
-    else:
-        return redirect('logar')
-
-
-
-def ver_resp_feedback(request):
-    if request.user.is_authenticated:
-        return
+        pedidoId = request.GET.get('pedidoId')
+        pedido = Pedido.objects.get(pk=pedidoId)
+        mensagem = pedido.feedback.mensagem
+        resposta = pedido.feedback.resposta
+        context = {'pedidoId': pedidoId,
+                   'mensagem': mensagem,
+                   'resposta': resposta}
+        return render(request, 'corpoAcad/feedback/visualizar_resposta.html', context)
     else:
         return redirect('logar')
