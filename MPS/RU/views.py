@@ -129,6 +129,10 @@ def visualizar_pedidos(request):
 def registrarFeedback(request):
     if request.user.is_authenticated:
         if request.method == 'POST':
+            mensagem = request.POST.get('fixedTextarea')
+            feedback = Feedback(mensagem=mensagem, respondido=False, resposta='')
+            feedback.respondido = False
+            feedback.save()
             #TODO: Salvar o feedback quando o model estiver pronto
             return
         else:
